@@ -57,6 +57,10 @@ module ActiveAdmin
   autoload :ViewHelpers,              'active_admin/view_helpers'
   autoload :Views,                    'active_admin/views'
 
+  class ActiveAdmin::Router
+    autoload :ResourceRoutes,         'active_admin/router/resource_routes'
+  end
+
   class << self
 
     attr_accessor :application
