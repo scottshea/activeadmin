@@ -1,5 +1,7 @@
 module ActiveAdmin
   class Router
+    attr_reader :application
+
     def initialize(application)
       @application = application
     end
@@ -13,12 +15,14 @@ module ActiveAdmin
     #   end
     #
     def apply(router)
-      define_root_routes router
-      define_resource_routes router
+      define_root_routes(router)
+      define_resource_routes(router)
     end
 
+    private
+
     def define_root_routes(router)
-      router.instance_exec @application.namespaces.values do |namespaces|
+      router.instance_exec application.namespaces.values do |namespaces|
         namespaces.each do |namespace|
           if namespace.root?
             root to: namespace.root_to
@@ -33,13 +37,12 @@ module ActiveAdmin
 
     # Defines the routes for each resource
     def define_resource_routes(router)
-      router.instance_exec @application.namespaces do |namespaces|
-        resources = namespaces.values.flat_map{ |n| n.resources.values }
+      router.instance_exec application.namespaces do |namespaces|
+        resources = namespaces.values.flat_map { |n| n.resources.values }
         resources.each do |config|
           ActiveAdmin::Router::ResourceRoutes.new(router, config).call
         end
       end
-
     end
   end
 end
