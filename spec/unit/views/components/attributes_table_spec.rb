@@ -246,7 +246,6 @@ describe ActiveAdmin::Views::AttributesTable do
       end
       it "should render" do
         expect(table.find_by_tag("th")[0].content).to eq "Foo"
-        expect(table.find_by_tag("th")[1].content).to eq "Bar"
         expect(table.find_by_tag("td")[0].content).to eq "1"
         expect(table.find_by_tag("td")[1].content).to eq "2"
       end
