@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe ActiveAdmin::Views::AttributesTable do
 
-  describe "creating with the dsl" do
+  describe "creating with the dsl", focus: true do
     let(:helpers) { action_view }
 
     let(:post) do

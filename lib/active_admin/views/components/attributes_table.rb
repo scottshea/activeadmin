@@ -8,6 +8,7 @@ module ActiveAdmin
         @collection     = is_array?(obj) ? obj : [obj]
         @resource_class = @collection.first.class
         options = attrs.extract_options!
+        options[:defaults] ||= attrs.empty? && !block_given?
         options[:for] = @collection.first if single_record?
         super(options)
         @table = table
@@ -61,10 +62,10 @@ module ActiveAdmin
       end
 
       def display_rows(*attrs, options)
-        attrs = default_rows if attrs.empty?
-        attrs.map!(&:to_s)
+        attrs += default_rows.map!(&:to_s) if options[:defaults]
         attrs += [*options[:with]].map(&:to_s)
         attrs -= [*options[:expect]].map(&:to_s)
+        attrs
       end
 
       # Build Colgroups
